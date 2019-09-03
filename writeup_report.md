@@ -42,7 +42,7 @@ My project includes the following files:
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
-```sh
+```
 python drive.py model.h5
 ```
 
@@ -71,9 +71,8 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
-
-For details about how I created the training data, please refer model.py line 18-31
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road. 
+First it is a little bit hard for me to go through the whole track, maybe you need to try several times to finish a whole round.
 
 ### Model Architecture and Training Strategy
 
@@ -93,13 +92,24 @@ The final step was to run the simulator to see how well the car was driving arou
 
 #### 2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes
+layer1 : (Convolution2D(24,5,5,subsample = (2,2),activation = "relu"))
+layer2:  (Convolution2D(36,5,5,subsample = (2,2),activation = "relu"))
+layer3:  (Convolution2D(48,5,5,subsample = (2,2),activation = "relu"))
+layer4:  (Convolution2D(64,3,3,activation = "relu"))
+layer5： (Convolution2D(64,3,3,activation = "relu"))
+layer6:  (Dense(100))
+layer7:  (Dense(50))
+layer8:  (Dense(10))
+layer9:   (Dense(1))
+During the dese layer (layer6-ayer9), I also add the activation and dropout.
+
 
 I tried use a model.summary()to show the info of each layer after I finish all the process and also generate the output video.
 However some file on the workspace is deleted by me and it seems the script could not run normally.
 #### 3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving
+To capture good driving behavior, I first recorded two laps on track one using center lane driving. 
 
 Then I use the code to add the left and right view picture of the camera to my training set
 
