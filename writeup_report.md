@@ -95,34 +95,46 @@ The final step was to run the simulator to see how well the car was driving arou
 
 The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
-
-![alt text][image1]
-
+I tried use a model.summary()to show the info of each layer after I finish all the process and also generate the output video.
+However some file on the workspace is deleted by me and it seems the script could not run normally.
 #### 3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving
 
-![alt text][image2]
+Then I use the code to add the left and right view picture of the camera to my training set
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+I also used the code to flip the image and add it to the training set. You can refer the code below:
+```
+images = []
+measurements = []
+for line in lines:
+    for i in range(3):
+        source_path = line[i]
+        filename =source_path.split('\\')[-1]
+        current_path = 'data/IMG/'+filename
+        image = ndimage.imread(current_path)
+        images.append(image)
+        if i ==0:
+            measurement = float(line[3])
+        if i ==1:
+            measurement = float(line[3])+angle_correct
+        if i ==2:
+            measurement =float(line[3])-angle_correct
+        measurements.append(measurement)
+# use flip to do the data augmentation
+augmented_images, augmented_measurements = [],[]
+for image,measurement in zip (images,measurements):
+    augmented_images.append(image)
+    augmented_measurements.append(measurement)
+    augmented_images.append(cv2.flip(image,1))
+    augmented_measurements.append(measurement*(-1.0))
+```
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
-
-Then I repeated this process on track two in order to get more data points.
-
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
-
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+After the collection process,  I finished the data augmentation and add the data to my training data set.
 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
+I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 2 as evidenced by the validation loss change. I used an adam optimizer so that manually training the learning rate wasn't necessary.
+
+Finally I got a not bad result and the car could run automatically for a full round.
