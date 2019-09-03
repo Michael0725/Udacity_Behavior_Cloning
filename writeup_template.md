@@ -1,8 +1,8 @@
 # **Behavioral Cloning** 
 
-## Writeup Template
+## ReadMe
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+### This project is about using the simulator to collect data of good driving behavior and then train a nueral net work to predict the steering angle from images.
 
 ---
 
